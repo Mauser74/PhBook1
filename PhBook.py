@@ -37,7 +37,7 @@ def open_ph_book():
     if len(files_list) == 0:
         # Список файлов телефонной книги пуст
         print(f'{text.no_files}')
-        input(f'{text.press_any_key}')
+        input(f'{text.press_enter}')
         return
 
     for i in range(0, len(files_list)):
@@ -69,7 +69,7 @@ def save_ph_book():
     print_caption(save_ph_book)
     save_file(filename_of_book)
     print(f'{text.save_complete}')
-    input(f'{text.press_any_key}')
+    input(f'{text.press_enter}')
 
 
 # Сохранить телефонную книгу под другим именем
@@ -80,9 +80,14 @@ def save_as_ph_book():
     new_filename = input(f'{text.save_as_filename}')
 
     if len(new_filename):
-        # Имя не пустое, сохраняем файл
-        filename_of_book = new_filename
-        save_file(new_filename)
+        # Имя не пустое
+        if new_filename[-5:] != '.json':
+            # Пользователь забыл указать расширение, добавим
+            filename_of_book = new_filename + '.json'
+        else:
+            # С расширением всё нормально
+            filename_of_book = new_filename
+        save_file(filename_of_book)
 
 
 # Сохраняет файл телефонной книги под именем filename
@@ -98,7 +103,7 @@ def print_all_contacts():
     for idx, contact in enumerate(ph_book):
         print_contact(idx)
         print('-' * 20)
-    input(f'{text.press_any_key}')
+    input(f'{text.press_enter}')
 
 
 # Печать одного контакта
@@ -193,16 +198,16 @@ def delete_contact():
 
 
 # Структура главного меню
-main_menu = ("Телефонная книга. ver.1",                     None,
-             "Открыть телефонную книгу",                    open_ph_book,
-             "Сохранить телефонную книгу",                  save_ph_book,
-             "Сохранить телефонную книгу с новым именем",   save_as_ph_book,
-             "Показать все контакты",                       print_all_contacts,
-             "Добавить контакт",                            add_contact,
-             "Найти контакт",                               find_contact,
-             "Изменить контакт",                            change_contact,
-             "Удалить контакт",                             delete_contact,
-             "Завершить работу",                            None
+main_menu = ("Телефонная книга",                                None,
+             "Открыть телефонную книгу",                        open_ph_book,
+             "Сохранить телефонную книгу",                      save_ph_book,
+             "Сохранить телефонную книгу с новым именем",       save_as_ph_book,
+             "Показать все контакты",                           print_all_contacts,
+             "Добавить контакт",                                add_contact,
+             "Найти контакт",                                   find_contact,
+             "Изменить контакт",                                change_contact,
+             "Удалить контакт",                                 delete_contact,
+             "Завершить работу",                                None
              )
 
 
@@ -215,8 +220,8 @@ def print_menu(menu):
                 # Выводим пункты меню и нумеруем их
                 print(f'{i//2}. {menu[i]}')
             else:
-                # Выводим название меню
-                print(f'{menu[0]}\n')
+                # Выводим название меню и текущей телефонной книги
+                print(f'{menu[0]} {filename_of_book}\n')
         # Ожидаем выбора пользователя
         select_function = select_menu(menu)
         if select_function:

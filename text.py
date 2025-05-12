@@ -1,5 +1,5 @@
 input_menu = '\nВыберете пункт меню: '
-press_any_key = 'Нажмите любую клавишу...'
+press_enter = 'Нажмите Enter...'
 enter_name = 'Введите имя:\t\t\t'
 enter_new_name = 'Введите новое имя: '
 enter_phone = 'Введите номер телефона:\t'
